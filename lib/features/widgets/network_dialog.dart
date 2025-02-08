@@ -4,16 +4,22 @@ class NetworkDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Expanded(
-        child: Row(
-          children: [
-            Icon(Icons.wifi_off, color: Colors.red),
-            SizedBox(width: 10),
-            Text('No Internet Connection'),
-          ],
-        ),
+      title: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.wifi_off, color: Colors.red),
+          SizedBox(width: 10),
+          Flexible(
+            child: Text(
+              'No Internet Connection',
+              overflow: TextOverflow.visible,
+            ),
+          ),
+        ],
       ),
-      content: Text('Please check your network connection and try again.'),
+      content: SingleChildScrollView(
+        child: Text('Please check your network connection and try again.'),
+      ),
       actions: [
         TextButton(
           child: Text('OK'),
@@ -21,6 +27,7 @@ class NetworkDialog extends StatelessWidget {
         ),
       ],
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      contentPadding: EdgeInsets.all(20), // Add padding
     );
   }
 }

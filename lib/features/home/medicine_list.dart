@@ -29,7 +29,6 @@ class MedicineCard extends StatelessWidget {
     return Card(
       margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       child: ListTile(
-        // Display an initial representing the medicine type
         leading: CircleAvatar(
           backgroundColor: Colors.blue.shade300,
           child: Text(

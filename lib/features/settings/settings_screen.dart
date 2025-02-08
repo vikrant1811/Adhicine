@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../core/services/auth_service.dart';
-import '../auth/sign_in_screen.dart';
 import './components/settings_section.dart';
 import './components/caretakers_grid.dart';
 import './components/device_connection.dart';

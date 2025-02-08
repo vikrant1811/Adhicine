@@ -34,27 +34,32 @@ class _ReportScreenState extends State<ReportScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-          backgroundColor: Colors.white,
-          automaticallyImplyLeading: false,
-          centerTitle: true,
-          title: Text('Report',style: TextStyle(fontWeight: FontWeight.bold),)),
+        backgroundColor: Colors.white,
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        title: Text(
+          'Report',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        ),
+        elevation: 0,
+      ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Today's Report", style: Theme.of(context).textTheme.headlineSmall),
-            SizedBox(height: 16),
-            ReportSummary(),
-            Divider(),
+            _buildReportSummary(),
+            SizedBox(height: 20),
+            _buildCheckDashboard(),
+            SizedBox(height: 20),
             Text("Check History", style: Theme.of(context).textTheme.titleMedium),
             SizedBox(height: 16),
             _buildCalendarTable(),
-            Divider(),
+            SizedBox(height: 20),
             StreamBuilder(
               stream: firestoreService.getMedicines(),
               builder: (context, snapshot) {
-                if (!snapshot.hasData) return CircularProgressIndicator();
+                if (!snapshot.hasData) return Center(child: CircularProgressIndicator());
                 return MedicineTimeline(medicines: snapshot.data!);
               },
             ),
@@ -68,24 +73,68 @@ class _ReportScreenState extends State<ReportScreen> {
     );
   }
 
+  Widget _buildReportSummary() {
+    return Container(
+      padding: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4)],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text("Today's Report", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          SizedBox(height: 10),
+          ReportSummary(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCheckDashboard() {
+    return Container(
+      padding: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4)],
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Check Dashboard", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                SizedBox(height: 4),
+                Text("Here you will find everything related to your active and past medicines.",
+                    style: TextStyle(fontSize: 14, color: Colors.grey[600])),
+              ],
+            ),
+          ),
+          Icon(Icons.pie_chart, color: Colors.teal, size: 40),
+        ],
+      ),
+    );
+  }
+
   Widget _buildCalendarTable() {
-    return Table(
-      children: [
-        TableRow(
-          children: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI']
-              .map((day) => Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Text(day, textAlign: TextAlign.center),
-          ))
-              .toList(),
-        ),
-        TableRow(
-          children: List.generate(6, (index) => Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Text('${index + 1}', textAlign: TextAlign.center),
-          )),
-        )
-      ],
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: List.generate(6, (index) {
+        bool isSelected = index == 0;
+        return GestureDetector(
+          onTap: () {},
+          child: CircleAvatar(
+            radius: 22,
+            backgroundColor: isSelected ? Colors.blue : Colors.grey[300],
+            child: Text('${index + 1}',
+                style: TextStyle(
+                    color: isSelected ? Colors.white : Colors.black, fontWeight: FontWeight.bold)),
+          ),
+        );
+      }),
     );
   }
 }

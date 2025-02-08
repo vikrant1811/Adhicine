@@ -28,7 +28,7 @@ class ReportSummary extends StatelessWidget {
 
         return Table(
           columnWidths: const {
-            0: FlexColumnWidth(2),
+            0: FlexColumnWidth(1),
             1: FlexColumnWidth(1),
             2: FlexColumnWidth(1),
             3: FlexColumnWidth(1),
